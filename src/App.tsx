@@ -146,6 +146,9 @@ const App = () => {
       setProjectiles((prev) => {
         return prev.filter((proj) => {
           for (let enemyElement of enemyElements) {
+            const isExploding = enemyElement.classList.contains("exploding")
+            if (isExploding) continue
+
             const targetRect = enemyElement.getBoundingClientRect()
             const projRect = {
               left: proj.x,

@@ -1,3 +1,5 @@
+// ./components/Projectile/Projectile.tsx
+
 import { IconType } from 'react-icons'
 import { motion } from 'framer-motion'
 import './Projectile.scss'

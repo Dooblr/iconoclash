@@ -1,4 +1,5 @@
 // utils/movement.ts
+
 export const moveTowardsTarget = (
   currentX: number,
   currentY: number,
