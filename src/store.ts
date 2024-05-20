@@ -1,5 +1,5 @@
-import create from 'zustand'
-import { moveTowardsTarget } from './utils/movement'
+import create from "zustand"
+import { moveTowardsTarget } from "./utils/movement"
 
 interface Position {
   x: number
@@ -14,13 +14,10 @@ interface StoreState {
   enemies: { [id: string]: Position }
   setEnemyPosition: (id: string, position: Position) => void
   removeEnemy: (id: string) => void
-  initializeEnemy: (id: string) => void
-  initializeRandomEnemy: (id: string) => void
+  initializeEnemy: (id: string, position: Position) => void
   moveEnemies: () => void
   isPaused: boolean
   togglePause: () => void
-  points: number
-  incrementPoints: () => void
 }
 
 const useStore = create<StoreState>((set, get) => ({
@@ -39,17 +36,11 @@ const useStore = create<StoreState>((set, get) => ({
       delete newEnemies[id]
       return { enemies: newEnemies }
     }),
-  initializeEnemy: (id) =>
+  initializeEnemy: (id, position) =>
     set((state) => ({
-      enemies: { ...state.enemies, [id]: { x: window.innerWidth / 2, y: 0 } },
+      enemies: { ...state.enemies, [id]: { x: position.x, y: position.y } },
     })),
-  initializeRandomEnemy: (id) =>
-    set((state) => ({
-      enemies: {
-        ...state.enemies,
-        [id]: { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight },
-      },
-    })),
+
   moveEnemies: () => {
     set((state) => {
       if (state.isPaused) return
@@ -71,8 +62,6 @@ const useStore = create<StoreState>((set, get) => ({
   },
   isPaused: false,
   togglePause: () => set((state) => ({ isPaused: !state.isPaused })),
-  points: 0,
-  incrementPoints: () => set((state) => ({ points: state.points + 1 })),
 }))
 
 export default useStore

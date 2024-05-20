@@ -4,6 +4,13 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  &.exploding {
+    .enemy-icon,
+    .enemy-health-bar {
+      display: none;
+    }
+  }
 }
 
 .enemy-health-bar {
@@ -23,6 +30,7 @@
 
 .enemy-icon {
   transition: color 0.2s;
+  font-size: 5rem; // Adjusted size for larger enemies
 }
 
 .enemy-icon.hit {

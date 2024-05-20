@@ -18,11 +18,10 @@ const Enemy: React.FC<EnemyProps> = ({ maxHealth, size, Icon, onDeath, id }) => 
   const [currentHealth, setCurrentHealth] = useState<number>(maxHealth)
   const [isHit, setIsHit] = useState<boolean>(false)
   const [isExploding, setIsExploding] = useState<boolean>(false)
-  const { enemies, removeEnemy, incrementPoints } = useStore()
+  const { enemies, removeEnemy } = useStore()
 
   useEffect(() => {
     if (currentHealth === 0) {
-      incrementPoints() // Increment points immediately when health reaches 0
       setIsExploding(true)
       setTimeout(() => {
         setIsExploding(false)
@@ -32,7 +31,7 @@ const Enemy: React.FC<EnemyProps> = ({ maxHealth, size, Icon, onDeath, id }) => 
         }
       }, 3000) // Explosion lasts 3 seconds
     }
-  }, [currentHealth, onDeath, removeEnemy, id, incrementPoints])
+  }, [currentHealth])
 
   const handleHit = () => {
     setIsHit(true)
