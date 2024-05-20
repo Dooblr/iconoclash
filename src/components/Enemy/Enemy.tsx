@@ -31,7 +31,7 @@ const Enemy: React.FC<EnemyProps> = ({ maxHealth, size, Icon, onDeath, id }) => 
         }
       }, 3000) // Explosion lasts 3 seconds
     }
-  }, [currentHealth])
+  }, [currentHealth, onDeath, removeEnemy, id])
 
   const handleHit = () => {
     setIsHit(true)
@@ -43,12 +43,20 @@ const Enemy: React.FC<EnemyProps> = ({ maxHealth, size, Icon, onDeath, id }) => 
     const enemyElement = enemyRef.current
     if (enemyElement) {
       const handleEnemyHit = () => handleHit()
+      const handleAnimationEnd = () => {
+        if (isExploding) {
+          onDeath()
+          removeEnemy(id)
+        }
+      }
       enemyElement.addEventListener('enemyHit', handleEnemyHit)
+      enemyElement.addEventListener('animationend', handleAnimationEnd)
       return () => {
         enemyElement.removeEventListener('enemyHit', handleEnemyHit)
+        enemyElement.removeEventListener('animationend', handleAnimationEnd)
       }
     }
-  }, [])
+  }, [isExploding, onDeath, removeEnemy, id])
 
   return (
     <div
